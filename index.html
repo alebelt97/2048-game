@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>2048</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <meta name="theme-color" content="#16213e">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="2048">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>2048</h1>
+      <div class="scores">
+        <div class="score-box">
+          <span class="score-label">SCORE</span>
+          <span class="score-value" id="score">0</span>
+        </div>
+        <div class="score-box">
+          <span class="score-label">BEST</span>
+          <span class="score-value" id="best">0</span>
+        </div>
+      </div>
+    </div>
+    <div class="subheader">
+      <p>Join the tiles, get to <strong>2048!</strong></p>
+      <button id="new-game-btn">New Game</button>
+    </div>
+    <div class="grid-container">
+      <div class="grid-background">
+        <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+        <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+        <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+        <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+      </div>
+      <div class="grid-tiles" id="grid-tiles"></div>
+      <div class="overlay" id="overlay-over">
+        <p>Game over!</p>
+        <button class="overlay-btn" id="retry-btn">Try again</button>
+      </div>
+      <div class="overlay" id="overlay-win">
+        <p>You win! 🎉</p>
+        <div class="overlay-actions">
+          <button class="overlay-btn" id="keep-playing-btn">Keep playing</button>
+          <button class="overlay-btn" id="new-game-win-btn">New Game</button>
+        </div>
+      </div>
+    </div>
+    <p class="instructions">Use <strong>arrow keys</strong> or <strong>swipe</strong> to move tiles. Tiles with the same number <strong>merge</strong> when they touch!</p>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
