@@ -155,6 +155,8 @@ function move(direction) {
     for (let c = 0; c < 4; c++)
       if (finalMergeMap[r][c]) tileElements[r][c].dataset.animate = 'merged';
 
+  if (totalScore > 0) showScoreDelta(totalScore);
+
   spawnTile();
   checkWin();
   if (!state.won || state.keepPlaying) checkGameOver();
@@ -192,6 +194,24 @@ function checkGameOver() {
   state.over = true;
 }
 
+// ─── Score delta animation ────────────────────────────────────────────────────
+
+function showScoreDelta(delta) {
+  const box = scoreEl.closest('.score-box');
+  const el = document.createElement('div');
+  el.className = 'score-delta';
+  el.textContent = '+' + delta;
+  box.appendChild(el);
+  anime({
+    targets: el,
+    translateY: [0, -46],
+    opacity: [1, 0],
+    duration: 950,
+    easing: 'easeOutExpo',
+    complete: () => el.remove()
+  });
+}
+
 // ─── Confetti ─────────────────────────────────────────────────────────────────
 
 function launchConfetti() {
@@ -204,8 +224,15 @@ function launchConfetti() {
 // ─── Render ───────────────────────────────────────────────────────────────────
 
 function render() {
+  const prevScore = parseInt(scoreEl.textContent || '0');
   scoreEl.textContent = state.score;
   bestEl.textContent  = state.best;
+
+  if (state.score > prevScore) {
+    scoreEl.classList.remove('score-flash');
+    void scoreEl.offsetWidth;
+    scoreEl.classList.add('score-flash');
+  }
 
   for (let r = 0; r < 4; r++) {
     for (let c = 0; c < 4; c++) {
