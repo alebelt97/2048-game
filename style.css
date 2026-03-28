@@ -348,6 +348,18 @@ h1 {
   font-weight: 700;
 }
 
+/* ── TV / large screen (PS5 browser: 1920×1080) ──────────────────── */
+
+@media (min-width: 1200px) {
+  body {
+    padding: 60px 96px;
+    align-items: center;
+  }
+  .container {
+    width: min(680px, 80vh);
+  }
+}
+
 /* ── Small screen (iPhone SE, 375px) ─────────────────────────────── */
 
 @media (max-width: 400px) {

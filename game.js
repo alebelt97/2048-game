@@ -308,6 +308,51 @@ document.getElementById('keep-playing-btn').addEventListener('click', () => {
   overlayWin.classList.remove('visible');
 });
 
+// ─── Gamepad ──────────────────────────────────────────────────────────────────
+
+let prevButtons = [];
+let prevStickDir = null;
+const STICK_DEAD = 0.5;
+
+function gamepadLoop() {
+  const gp = navigator.getGamepads ? [...navigator.getGamepads()].find(g => g) : null;
+  if (gp) {
+    const btns = gp.buttons.map(b => b.pressed);
+
+    // D-pad
+    const dpad = [
+      { i: 12, dir: 'up' }, { i: 13, dir: 'down' },
+      { i: 14, dir: 'left' }, { i: 15, dir: 'right' }
+    ];
+    for (const { i, dir } of dpad) {
+      if (btns[i] && !prevButtons[i]) move(dir);
+    }
+
+    // New game — Options (9) anytime; Cross (0) when overlay visible
+    if (btns[9] && !prevButtons[9]) newGame();
+    if (btns[0] && !prevButtons[0] && (state.over || (state.won && !state.keepPlaying))) newGame();
+
+    // Left stick
+    const ax = gp.axes[0], ay = gp.axes[1];
+    let stickDir = null;
+    if (Math.abs(ax) > STICK_DEAD || Math.abs(ay) > STICK_DEAD) {
+      stickDir = Math.abs(ax) >= Math.abs(ay)
+        ? (ax > 0 ? 'right' : 'left')
+        : (ay > 0 ? 'down' : 'up');
+    }
+    if (stickDir && stickDir !== prevStickDir) move(stickDir);
+    prevStickDir = stickDir;
+
+    prevButtons = btns;
+  }
+  requestAnimationFrame(gamepadLoop);
+}
+
+window.addEventListener('gamepadconnected', () => {
+  prevButtons = [];
+  requestAnimationFrame(gamepadLoop);
+});
+
 // ─── Start ────────────────────────────────────────────────────────────────────
 
 init();
