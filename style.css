@@ -4,10 +4,16 @@
   padding: 0;
 }
 
+html {
+  overflow: hidden;
+  height: 100%;
+}
+
 body {
   background: #16213e;
   background: radial-gradient(ellipse at top, #1a1a2e 0%, #16213e 100%);
-  min-height: 100vh;
+  height: 100%;
+  overflow: hidden;
   font-family: "Nunito", "Clear Sans", Arial, sans-serif;
   color: #f0e6d3;
   display: flex;

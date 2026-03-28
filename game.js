@@ -259,7 +259,11 @@ const SWIPE_THRESHOLD = 20;
 document.addEventListener('touchstart', e => {
   touchStartX = e.touches[0].clientX;
   touchStartY = e.touches[0].clientY;
-}, { passive: true });
+}, { passive: false });
+
+document.addEventListener('touchmove', e => {
+  e.preventDefault();
+}, { passive: false });
 
 document.addEventListener('touchend', e => {
   const dx = e.changedTouches[0].clientX - touchStartX;
